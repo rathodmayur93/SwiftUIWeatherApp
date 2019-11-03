@@ -9,15 +9,34 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var isBottomViewAnimated = false
+    @ObservedObject var weatherForecastVM : WeatherForecastViewModel
+    
+    init() {
+        self.weatherForecastVM = WeatherForecastViewModel(apiService: APICall.shared,
+                                                          endPoints: Endpoint.dailyForecast)
+    }
+    
     var body: some View {
         
         VStack {
             
-            //Center View with tempreture, feels like and Weather Image
-            CenterView()
-                .overlay(TopView(), alignment: .top)
-                .overlay(BottomAnimationView(), alignment: .bottom)
+            TopView(hideDatePart: $isBottomViewAnimated)
             
+            Spacer()
+            
+            //Center View with tempreture, feels like and Weather Image
+            CenterView(isBottomViewAnimated: $isBottomViewAnimated,
+                       cityName: weatherForecastVM.cityName,
+                       temp: weatherForecastVM.currentTemp)
+                .offset(y: UIScreen.main.bounds.height / 4)
+            
+            Spacer()
+            
+            BottomAnimationView(isAnimationDone: $isBottomViewAnimated)
+                .offset(y: UIScreen.main.bounds.height / 3.5)
+
                 //Weather App Bottom View
                 //BottomAnimationView()
             /*
@@ -28,7 +47,6 @@ struct ContentView: View {
             .frame(width: UIScreen.main.bounds.width - 24, height: 60, alignment: .leading)
             .padding(.leading, 24)
             */
-            Spacer()
         }
         .background(Color("background"))
     }

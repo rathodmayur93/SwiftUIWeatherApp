@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Download-Umbrella-PNG.png",
+      "filename" : "Illustration5.pdf",
       "scale" : "1x"
     },
     {
@@ -11,6 +11,7 @@
     },
     {
       "idiom" : "universal",
+      "filename" : "Illustration5-1.pdf",
       "scale" : "3x"
     }
   ],
